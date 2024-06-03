@@ -21,16 +21,10 @@ sem_t *sem_start, *sem_sync;
 void signal_handler(int sig) {
     switch(sig) {
         case SIGUSR1:
-            printf("Processus fils %d : reçu SIGUSR1, commence la tâche\n", getpid());
-            
-            // Tâche complexe: Calcul de la somme des nombres de 1 à 99000000
-            long long sum = 0;
-            for (long long i = 1; i <= 99000000; ++i) {
-                sum += i;
-            }
-            printf("Processus fils %d : tâche terminée avec sum = %lld\n", getpid(), sum);
-
-            kill(getppid(), SIGUSR2); // Envoyer confirmation au père
+            printf("Processus fils %d : reçu SIGUSR1\n", getpid());
+            sleep(1);  // Simuler une tâche
+            printf("Processus fils %d : tâche terminée\n", getpid());
+            kill(getppid(), SIGUSR2);  // Envoyer confirmation au père
             break;
         case SIGTERM:
             printf("Processus fils %d : reçu SIGTERM, terminer\n", getpid());
